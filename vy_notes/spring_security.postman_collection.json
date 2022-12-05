@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "a249ad56-b4e9-485b-82f3-0a7b079d6ac0",
+		"name": "spring_security",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16859724"
+	},
+	"item": [
+		{
+			"name": "simple_get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWN1cml0eS1zZXJ2aWNlIiwic3ViIjoiYWRtaW4iLCJleHAiOjE2NzAyMTIwNTYsImlhdCI6MTY3MDIxMTk5Niwic2NvcGUiOiJBRE1JTiBVU0VSIn0.PCRg2J1uSeCdb4rfDgaQBzlXn_cC1J3UC4RcPzmGHjyiJeeUVEz6nZgOTc4W85mAy-88MfaWcTVsBPPHFB3mc8qw1U_9zTRxEvz3Y8uV8XRRwOzJ2l0aia0AYDh-OxKN4YepMBlle8P7vPQgxty09kNZJAOkjicwcafS-Gzwwui15VBSoG09D7fQx7MFfPuQQoO88v0NtqMam6cd_UjVaAwTfX8JGU_w3d9d2ogOq1X6lTtHdiiND5hxD57OsvPJSf4jizA4kJvJRPU3QKKgyiJuyH4O11J1BNm2ea9gSe8GlMkGt2p79tfH5gc9JBkUhjBjWWyINavm9Q1OHqhWng",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/dataTest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"dataTest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "withRefreshToken",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "grantType",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9898/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
