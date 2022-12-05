@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class SecConfig {
-    private RsakeysConfig rsakeysConfig;
+    private final RsakeysConfig rsakeysConfig;
 
     public SecConfig(RsakeysConfig rsakeysConfig) {
         this.rsakeysConfig = rsakeysConfig;
@@ -23,13 +23,14 @@ public class SecConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf->csrf.disable())
-                .authorizeRequests(auth->auth.anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .authorizeRequests(auth -> auth.anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .build();
     }
+
     @Bean
-    JwtDecoder jwtDecoder(){
+    JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsakeysConfig.publicKey()).build();
     }
 }

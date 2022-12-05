@@ -9,11 +9,13 @@ import java.util.Map;
 
 @RestController
 public class CustomerRestAPI {
+
     @GetMapping("/customers")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    public Map<String,Object> customer(Authentication authentication){
-        return Map.of("name","Mohamed","email", "med@gmail.com",
-                "username",authentication.getName(),
-                "scope",authentication.getAuthorities());
+    public Map<String, Object> customer(Authentication authentication) {
+        return Map.of("name", "Mohamed", "email", "med@gmail.com",
+                "username", authentication.getName(),
+                "scope", authentication.getAuthorities());
     }
+
 }

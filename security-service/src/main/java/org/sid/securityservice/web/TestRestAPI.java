@@ -7,22 +7,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 public class TestRestAPI {
+
     @GetMapping("/dataTest")
     @PreAuthorize("hasAuthority('SCOPE_USER')")
-    public Map<String, Object> dataTest(Authentication authentication){
+    public Map<String, Object> dataTest(Authentication authentication) {
         return Map.of(
-                "message","Data test",
-                "username",authentication.getName(),
-                "authorities",authentication.getAuthorities()
+                "message", "Data test",
+                "username", authentication.getName(),
+                "authorities", authentication.getAuthorities()
         );
     }
+
     @PostMapping("/saveData")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    public Map<String,String> saveData(String data){
-        return Map.of("dataSaved",data);
+    public Map<String, String> saveData(String data) {
+        return Map.of("dataSaved", data);
     }
+
 }
