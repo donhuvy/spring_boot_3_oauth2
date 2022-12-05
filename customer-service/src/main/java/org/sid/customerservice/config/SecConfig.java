@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class SecConfig {
+
     private final RsakeysConfig rsakeysConfig;
 
     public SecConfig(RsakeysConfig rsakeysConfig) {
