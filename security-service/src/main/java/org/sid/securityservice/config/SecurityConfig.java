@@ -14,6 +14,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
@@ -41,11 +42,17 @@ public class SecurityConfig {
     }
 
     //@Bean
+    //public EnableMethodSecurity enableMethodSecurity(){
+    //    return EnableMethodSecurity.prePostEnabled();
+    //}
+
+    //@Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
         var authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(passwordEncoder);
         authProvider.setUserDetailsService(userDetailsService);
@@ -53,32 +60,36 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService inMemoryUserDetailsManager(){
+    public UserDetailsService inMemoryUserDetailsManager() {
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("1234")).authorities("USER").build(),
                 User.withUsername("user2").password(passwordEncoder.encode("1234")).authorities("USER").build(),
-                User.withUsername("admin").password(passwordEncoder.encode("1234")).authorities("USER","ADMIN").build()
+                User.withUsername("admin").password(passwordEncoder.encode("1234")).authorities("USER", "ADMIN").build()
         );
     }
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(csrf->csrf.disable())
-                .authorizeRequests(auth->auth.antMatchers("/token/**").permitAll())
-                .authorizeRequests(auth->auth.anyRequest().authenticated())
-                .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        return httpSecurity.cors().and().csrf().disable().exceptionHandling().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests().requestMatchers("/token/**").permitAll()
+                .requestMatchers("/api/test/**").permitAll().and()
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
+
     @Bean
-    JwtDecoder jwtDecoder(){
+    JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsakeysConfig.publicKey()).build();
     }
+
     @Bean
-    JwtEncoder jwtEncoder(){
-        JWK jwk= new RSAKey.Builder(rsakeysConfig.publicKey()).privateKey(rsakeysConfig.privateKey()).build();
-        JWKSource<SecurityContext> jwkSource= new ImmutableJWKSet<>(new JWKSet(jwk));
+    JwtEncoder jwtEncoder() {
+        JWK jwk = new RSAKey.Builder(rsakeysConfig.publicKey()).privateKey(rsakeysConfig.privateKey()).build();
+        JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwkSource);
     }
 

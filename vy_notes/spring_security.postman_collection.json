@@ -7,7 +7,57 @@
 	},
 	"item": [
 		{
-			"name": "simple_get",
+			"name": "get_token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "withRefreshToken",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "grantType",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "refreshToken",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWN1cml0eS1zZXJ2aWNlIiwic3ViIjoiYWRtaW4iLCJleHAiOjE2NzAyMjE4NzIsImlhdCI6MTY3MDIyMTU3Mn0.hay6rw78VZUIgq_WMiDY2n8sQBEAh2PB8R1YI4LuFHtUowWOmYeh5VRJkar2amQNnp7BAavf-CcmwnetrdLFHnA4_OZV_EWkzZwM2YIq_bnvBWdnQhhHrj4vRuioBYAZUOZD3RhU_vWw_kUl6q7f5kBUGC7AcRYLzmjnYXZYrBOM4spbnmuQrwjjZJY0C1xNpeNB6wSbySerrTA5RYKVjbwuM-gcKSpCZKVASY5y4WeChNGl8YRYlNEqugvZBZgcp8YZt-dmFVEqS4T1eRfhGqzP0PObL2TSUjvYV7FWIJWWCAYLoEgBXpesHCOModwbZRMFzdgm2drp_IJvJgTz6A",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9898/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "security_get_data",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -36,44 +86,67 @@
 			"response": []
 		},
 		{
-			"name": "get_token",
+			"name": "customer_customers",
 			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+				"auth": {
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "username",
-							"value": "admin",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "text"
-						},
-						{
-							"key": "withRefreshToken",
-							"value": "true",
-							"type": "text"
-						},
-						{
-							"key": "grantType",
-							"value": "password",
-							"type": "text"
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWN1cml0eS1zZXJ2aWNlIiwic3ViIjoiYWRtaW4iLCJleHAiOjE2NzAyMjE3ODEsImlhdCI6MTY3MDIyMTcyMSwic2NvcGUiOiJBRE1JTiBVU0VSIn0.gQvTHfIhM9ycmVS11ejKUDE2r5Keo2tIqJOfChDgK9c1KnNYbUS2nI6fLWadIujVHpFCaHYl5nBpu6HrcqdE_w2HfL1sgN7cRkGircuBrlD56FJzmmNe7Dwg2hzu2vbGFWiBRIsRjpzB8etyqw1kB9e97N3GDKabl2rw3utWocitNQuZuefY3tuxaFqcVj2mPK-IofbQNhCycvjboKepZ6jTluQWVa4PBltjeLYT_jUPtGwXrIsSdAGYv1XA8_MraAh87XOkbtDyrEqklLDHStxvPvP9DSOjR_TCaRkQjeAxhaWWX89I93TQnYvK8SWzhExpGRkovWp-_zHAXaNL7Q",
+							"type": "string"
 						}
 					]
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "http://localhost:9898/token",
+					"raw": "http://localhost:8086/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "security_save_data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWN1cml0eS1zZXJ2aWNlIiwic3ViIjoiYWRtaW4iLCJleHAiOjE2NzAyMjExNDMsImlhdCI6MTY3MDIyMTA4Mywic2NvcGUiOiJBRE1JTiBVU0VSIn0.ANrYsHG2xE4bR0U7H_AQ-wHEooGTENBaAizikxNIezlvWNGsg3xeDARlFdN7w1Svmc49TfKbYKlkgkYK09QSQM7RjmH4tC4tDN3R20dz0ItmCfdHn1sAFc4yrmRN4uUmdAJAGS0awSVw8AD-Qj1VqL1YqjbdvW9LhUcmTr1XHjStVEOnwvx9JSuhNK1ee6ROUBQMg5wZpjgZKyAUvIPGiE4p1txcs2f-hop-NcIblTGGFOGZ_TYatSwxq44VwLUQS-I02iLmRgF21hq_d_gVHfw1tcDmLfTFjyc25Qkvfam-Jr-UvcxP_-DNicfJmX0aTkMWuJiWmNaa6VJ_AhjJpg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dataSaved\": \"My data\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9898/saveData",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9898",
 					"path": [
-						"token"
+						"saveData"
 					]
 				}
 			},
