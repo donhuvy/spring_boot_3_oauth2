@@ -67,12 +67,27 @@ public class SecurityConfig {
         );
     }
 
-    @Bean
+    //@Bean
+    //public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    //    return httpSecurity.cors().and().csrf().disable().exceptionHandling().and()
+    //            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+    //            .authorizeRequests().requestMatchers("/token/**").permitAll()
+    //            .requestMatchers("/api/test/**").permitAll().and()
+    //            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    //            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+    //            .httpBasic(Customizer.withDefaults())
+    //            .build();
+    //}
+
+
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.cors().and().csrf().disable().exceptionHandling().and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().requestMatchers("/token/**").permitAll()
-                .requestMatchers("/api/test/**").permitAll().and()
+        return httpSecurity
+                .cors().and()
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/token/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .httpBasic(Customizer.withDefaults())
